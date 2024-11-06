@@ -1,4 +1,4 @@
 export class UsuarioDTO {
-  email!: string;
-  senha!: string;
+  email?: string;
+  senha?: string;
 }
