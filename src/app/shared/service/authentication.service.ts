@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthenticationService {
   private readonly API = 'http://localhost:8080/opombo/auth';
 
   constructor(private httpClient: HttpClient) {}

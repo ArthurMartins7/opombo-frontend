@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { LoginService } from '../shared/service/login.service';
+import { AuthenticationService } from '../shared/service/authentication.service';
 import { UsuarioDTO } from './../shared/model/dto/UsuarioDTO';
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
@@ -16,10 +16,10 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
   public usuarioDTO = new UsuarioDTO();
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   public realizarLogin() {
-    this.loginService.autenticar(this.usuarioDTO).subscribe({
+    this.authenticationService.autenticar(this.usuarioDTO).subscribe({
       next: (jwt) => {
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
         let token: string = jwt.body + '';
