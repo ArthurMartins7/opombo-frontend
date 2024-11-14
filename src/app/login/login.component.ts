@@ -39,5 +39,7 @@ export class LoginComponent {
     });
   }
 
-  public cadastrar() {}
+  public cadastrar() {
+    this.router.navigate(['/cadastro']);
+  }
 }

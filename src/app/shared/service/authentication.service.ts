@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsuarioDTO } from '../model/dto/UsuarioDTO';
 import { Observable } from 'rxjs';
+import { Usuario } from '../model/entity/Usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,10 @@ export class AuthenticationService {
       observe: 'response',
       responseType: 'text' as 'json',
     });
+  }
+
+  public cadastrarUsuario(usuario: Usuario): Observable<any> {
+    return this.httpClient.post<Usuario>(this.API + '/novo-usuario', usuario);
   }
 
   sair() {
