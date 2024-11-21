@@ -1,4 +1,5 @@
 import { PerfilAcesso } from "../enums/PerfilAcesso";
+import { Mensagem } from "./Mensagem";
 
 export class Usuario {
   id: number;
@@ -7,5 +8,8 @@ export class Usuario {
   nome: string;
   email: string;
   senha: string;
+  criadoEm: string;
+  dataUltimaModificacao: string;
+  mensagens: Mensagem[];
   imagePerfil: string;
 }
