@@ -19,15 +19,16 @@ export class LoginComponent {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   public realizarLogin() {
+    console.log('usuarioDTO: ', this.usuarioDTO);
     this.authenticationService.autenticar(this.usuarioDTO).subscribe({
-      next: (jwt) => {
+      next: jwt => {
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
         let token: string = jwt.body + '';
         localStorage.setItem('tokenUsuarioAutenticado', token);
         this.router.navigate(['/home']);
       },
-      error: (erro) => {
-        var mensagem: string;
+      error: erro => {
+        let mensagem: string;
         if (erro.status == 401) {
           mensagem = 'Usuário ou senha inválidos, tente novamente';
         } else {
@@ -39,7 +40,7 @@ export class LoginComponent {
     });
   }
 
-  public cadastrar() {
+  public realizarCadastro() {
     this.router.navigate(['/cadastro']);
   }
 }

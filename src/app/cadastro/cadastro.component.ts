@@ -22,8 +22,9 @@ export class CadastroComponent {
   ) {}
 
   public cadastrar() {
+    console.log('usuario: ', this.usuario);
     this.authenticationService.cadastrarUsuario(this.usuario).subscribe(
-      resultado => {
+      (resultado) => {
         Swal.fire({
           title: "Cadastro realizado com sucesso!",
           text: "",
@@ -33,10 +34,10 @@ export class CadastroComponent {
         })
         this.voltar();
       },
-      erro => {
+      (erro) => {
         Swal.fire({
           title: "Erro ao realizar cadastro",
-          html: erro.error.mensagem,
+          text: erro.error,
           icon: "error",
           showConfirmButton: true,
           confirmButtonColor: "#bef264"
@@ -47,7 +48,7 @@ export class CadastroComponent {
 
 
 public voltar() {
-  this.router.navigate(['/login'])
+  this.router.navigate([''])
 }
 
 }
