@@ -28,7 +28,7 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       error: erro => {
-        let mensagem: string;
+        var mensagem: string;
         if (erro.status == 401) {
           mensagem = 'Usuário ou senha inválidos, tente novamente';
         } else {

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Mensagem } from '../model/entity/Mensagem';
-import { MensagemSeletor } from '../model/seletor/Mensagem_seletor';
+import { MensagemSeletor } from '../model/seletor/mensagemSeletor';
 
 @Injectable({
   providedIn: 'root'
