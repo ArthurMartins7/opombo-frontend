@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Usuario } from '../shared/model/entity/Usuario';
-import { AuthenticationService } from '../shared/service/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthenticationService } from '../../shared/service/authentication/authentication.service';
+import { Usuario } from '../../shared/model/entity/Usuario';
 
 @Component({
   selector: 'app-cadastro',

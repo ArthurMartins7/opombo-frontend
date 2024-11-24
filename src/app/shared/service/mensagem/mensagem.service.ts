@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Mensagem } from '../model/entity/Mensagem';
-import { MensagemSeletor } from '../model/seletor/mensagemSeletor';
+import { MensagemSeletor } from '../../model/seletor/mensagemSeletor';
+import { Mensagem } from '../../model/entity/Mensagem';
 
 @Injectable({
   providedIn: 'root'
