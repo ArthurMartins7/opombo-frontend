@@ -45,7 +45,12 @@ export class HomeUserAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarTodasDenuncias();
+    this.seletor.limite = this.TAMANHO_PAGINA;
+    this.seletor.pagina = 1;
+    this.pesquisar();
+    this.contarPaginas();
   }
+
 
   public consultarTodasDenuncias() {
     this.denunciaService.buscarTodas().subscribe(
@@ -60,22 +65,74 @@ export class HomeUserAdminComponent implements OnInit {
     );
   }
 
-  // public pesquisar() {
-  //   this.denunciaService.buscarTodas(this.seletor).subscribe(
-  //     (resultado) => {
-  //       this.corredores = resultado;
-  //       //this.contarRegistros()
-  //     },
-  //     (erro) => {
-  //       console.error('Erro ao buscar corredores', erro.error.mensagem);
-  //     }
-  //   );
-  //   this.contarPaginas()
-  // }
+  public pesquisar() {
+    this.denunciaService.consultarComSeletor(this.seletor).subscribe(
+      (resultado) => {
+        this.denuncias = resultado;
+        this.contarRegistros();
+      },
+      (erro) => {
+        console.error('Erro ao buscar denuncias', erro.error?.mensagem || erro);
+      }
+    );
+  }
 
   public limpar() {
     this.seletor = new DenunciaSeletor();
     this.seletor.limite = this.TAMANHO_PAGINA;
     this.seletor.pagina = 1;
+  }
+
+  // arrumar dps
+  public analisar(): void{
+    this.router.navigate(['/home']);
+  }
+
+  contarRegistros(){
+    this.denunciaService.contarRegistros(this.seletor).subscribe(
+      (count: number) => {
+        this.totalRegistros = count
+      },
+      erro => {
+        console.log('Erro ao contar registros de denuncia', erro.error.mensagem)
+      }
+    )
+  }
+
+  atualizarPaginacao() {
+    this.contarPaginas();
+    this.pesquisar();
+  }
+
+  proximaPg(){
+    this.seletor.pagina++;
+    this.pesquisar();
+  }
+
+  voltarPg(){
+    this.seletor.pagina--;
+    this.pesquisar();
+  }
+
+  irParaPagina(indicePagina: number) {
+    this.seletor.pagina = indicePagina;
+    this.pesquisar();
+  }
+
+   // Método para criar um array de páginas para ser utilizado no ngFor do HTML
+   criarArrayPaginas(): any[] {
+    return Array(this.totalPaginas).fill(0).map((x, i) => i + 1);
+  }
+
+
+  contarPaginas(){
+    this.denunciaService.contarPaginas(this.seletor).subscribe(
+      (count: number) => {
+        this.totalPaginas = count
+      },
+      erro => {
+        console.log('Erro ao contar paginas de denuncia', erro.error.mensagem)
+      }
+    )
   }
 }

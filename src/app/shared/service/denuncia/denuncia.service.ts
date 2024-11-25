@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Denuncia } from '../../model/entity/Denuncia';
+import { DenunciaSeletor } from '../../model/seletor/denunciaSeletor';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,17 @@ export class DenunciaService {
 
   public buscarTodas(): Observable<Array<Denuncia>>{
     return this.httpCliente.get<Array<Denuncia>>(this.API);
+  }
+
+  public consultarComSeletor(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
+    return this.httpCliente.post<Array<Denuncia>>(this.API + '/filtro', seletor);
+  }
+
+  contarRegistros(seletor: DenunciaSeletor): Observable<number>{
+    return this.httpCliente.post<number>(this.API + '/contar', seletor)
+  }
+
+  contarPaginas(seletor: DenunciaSeletor): Observable<number>{
+    return this.httpCliente.post<number>(this.API + '/total-paginas', seletor)
   }
 }

@@ -97,11 +97,11 @@
               <i class="bi bi-trash"></i> Limpar
             </button>
           </div>
-          <!-- <div class="w-40">
-            <button (click)="pesquisar()" type="button" class="w-full text-white bg-smartverde hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800">
+          <div class="w-40">
+            <button (click)="pesquisar()" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <i class="bi bi-search"></i> Pesquisar
             </button>
-          </div> -->
+          </div>
         </div>
 
       </form>
@@ -138,14 +138,37 @@
           <td class="p-4">{{ denuncia.situacao }}</td>
           <td class="p-4">{{ denuncia.dataHoraCriacao }}</td>
           <td class="p-4 flex space-x-4">
-            <!-- <button (click)="analisar(denuncia)" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Analisar</button>
-            <button (click)="bloquear(denuncia)" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Bloquear</button> -->
+            <button (click)="analisar()" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Analisar</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <nav class="w-full max-w-3xl mx-auto mt-4">
+    <div class="flex justify-between items-center">
+      <div>
+        <label for="quantidadeRegistros" class="block text-sm font-medium text-gray-900">Quantidade de registros por página:</label>
+        <select id="quantidadeRegistros" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" [(ngModel)]="seletor.limite" (change)="atualizarPaginacao()">
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <ul class="flex space-x-1">
+        <li>
+          <button [disabled]="seletor.pagina == 1" (click)="voltarPg()" class="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+        </li>
+        <li *ngFor="let indice of criarArrayPaginas()">
+          <button (click)="irParaPagina(indice)" class="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">{{indice}}</button>
+        </li>
+        <li>
+          <button [disabled]="seletor.pagina == totalPaginas" (click)="proximaPg()" class="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Próxima</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
 
 </body>
-</html>
+
