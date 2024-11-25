@@ -1,1 +1,154 @@
-<p>usuario admin</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listagem de Mensagens Denunciadas</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <nav class="w-full bg-white border-gray-200 dark:bg-gray-900">
+    <div class="max-w-full flex flex-wrap items-center justify-between mx-auto p-2 lg:p-4">
+      <a href="#" class="flex items-center space-x-2 lg:space-x-3 rtl:space-x-reverse">
+        <img src="https://images.sftcdn.net/images/t_app-icon-m/p/6621d159-46ab-4a88-a14c-0cb108267e21/2957382984/pegue-o-pombo-logo" class="h-8" alt="OPombo Logo" />
+        <span class="self-center text-lg lg:text-2xl font-semibold whitespace-nowrap dark:text-white">OPombo</span>
+      </a>
+      <div class="flex md:order-2">
+        <div class="relative group">
+          <button class="relative w-9 h-9 lg:w-10 lg:h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none">
+            <svg class="absolute w-11 h-11 lg:w-12 lg:h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <div class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Logout</a>
+          </div>
+        </div>
+      </div>
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+        <ul class="flex flex-col p-2 lg:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 lg:space-x-16 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container mx-auto p-6">
+    <h2 class="text-2xl font-semibold mb-4">Listagem de Mensagens Denunciadas</h2>
+
+    <!-- Filtros de Consulta -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div class="flex flex-col">
+        <label for="filter1" class="text-gray-700">Filtro 1</label>
+        <input type="text" id="filter1" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Filtrar por ...">
+      </div>
+
+      <div class="flex flex-col">
+        <label for="filter2" class="text-gray-700">Filtro 2</label>
+        <select id="filter2" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="">Escolha uma opção</option>
+          <option value="option1">Opção 1</option>
+          <option value="option2">Opção 2</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col">
+        <label for="filter3" class="text-gray-700">Filtro 3</label>
+        <input type="date" id="filter3" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <div class="flex flex-col">
+        <label for="filter4" class="text-gray-700">Filtro 4</label>
+        <input type="text" id="filter4" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Filtrar por ...">
+      </div>
+    </div>
+
+    <!-- Tabela de Mensagens Denunciadas -->
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+      <thead>
+        <tr>
+          <th class="p-4 text-left">
+            <input type="checkbox" class="form-checkbox">
+          </th>
+          <th class="p-4 text-left">Mensagem</th>
+          <th class="p-4 text-left">Motivo</th>
+          <th class="p-4 text-left">Data da Denúncia</th>
+          <th class="p-4 text-left">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Exemplo de Mensagens Denunciadas -->
+        <tr>
+          <td class="p-4">
+            <input type="checkbox" class="form-checkbox">
+          </td>
+          <td class="p-4">Mensagem 1</td>
+          <td class="p-4">Ofensa</td>
+          <td class="p-4">01/01/2024</td>
+          <td class="p-4 flex space-x-4">
+            <button class="bg-green-500 text-white p-2 rounded-lg">Analisar</button>
+            <button class="bg-red-500 text-white p-2 rounded-lg">Bloquear</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="p-4">
+            <input type="checkbox" class="form-checkbox">
+          </td>
+          <td class="p-4">Mensagem 2</td>
+          <td class="p-4">Discurso de Ódio</td>
+          <td class="p-4">02/01/2024</td>
+          <td class="p-4 flex space-x-4">
+            <button class="bg-green-500 text-white p-2 rounded-lg">Analisar</button>
+            <button class="bg-red-500 text-white p-2 rounded-lg">Bloquear</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="w-full max-w-3xl mx-auto mt-8">
+    <table class="table-auto w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 text-center text-gray-900">Denunciante</th>
+          <th class="px-4 py-2 text-center text-gray-900">Mensagem</th>
+          <th class="px-4 py-2 text-center text-gray-900">Motivo</th>
+          <th class="px-4 py-2 text-center text-gray-900">Situacao</th>
+          <th class="px-4 py-2 text-center text-gray-900">Data e hora</th>
+          <th class="px-4 py-2 text-center text-gray-900"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-gray-200" *ngFor="let denuncia of denuncias">
+          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.denunciante }}</td>
+          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.mensagem }}</td>
+          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.motivo }}</td>
+          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.situacao }}</td>
+          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.dataHoraCriacao }}</td>
+          <td class="px-4 py-2 text-center">
+            <div class="flex justify-end space-x-2">
+              <!-- <button (click)="analisar(corredor.idCorredor)" type="button" class="w-24 text-white bg-smartamarelo hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800" >Editar</button>
+              <button (click)="excluir(corredor)" type="button" class="w-24 text-white bg-smartvermelho hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800" >Excluir</button> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</body>
+</html>
