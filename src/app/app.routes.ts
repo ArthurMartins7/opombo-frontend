@@ -5,6 +5,7 @@ import { HomeUserCommomComponent } from './components/usuario-comum/home/home.co
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { Component } from '@angular/core';
 import { UsuarioDetalheComponent } from './components/usuario-detalhe/usuario-detalhe.component';
+import { GerenciarDenunciaComponent } from './components/gerenciarDenuncia/gerenciar-denuncia/gerenciar-denuncia.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,4 +17,5 @@ export const routes: Routes = [
       ), },
   { path: 'home-user-commom', component: HomeUserCommomComponent },
   { path: 'usuario-detalhe', component: UsuarioDetalheComponent},
+  { path: 'gerenciar-denuncia', component: GerenciarDenunciaComponent}
 ];
