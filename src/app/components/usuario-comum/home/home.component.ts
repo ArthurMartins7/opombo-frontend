@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Usuario } from '../../../shared/model/entity/Usuario';
 
 @Component({
   selector: 'app-home',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.scss'
 })
 export class HomeUserCommomComponent {
+
 
 }

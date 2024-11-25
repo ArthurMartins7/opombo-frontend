@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioDTO } from '../../shared/model/dto/UsuarioDTO';
 import { AuthenticationService } from '../../shared/service/authentication/authentication.service';
 import { AuthorizationService } from '../../shared/service/authorization/authorization.service';
+import { Usuario } from '../../shared/model/entity/Usuario';
+import { UsuarioService } from '../../shared/service/usuario/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,9 @@ import { AuthorizationService } from '../../shared/service/authorization/authori
 })
 export class LoginComponent {
   public usuarioDTO = new UsuarioDTO();
+  public usuario = new Usuario();
+
+  private usuarioService = inject(UsuarioService);
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -50,13 +55,22 @@ export class LoginComponent {
   }
 
   public verificarPerfilAcesso() {
-    const perfilAcesso: string =
-      this.authorizationService.getPerfilAcessoDoUsuarioAutenticado();
-    if (perfilAcesso == 'ADMIN') {
-      this.router.navigate(['/home-user-admin']);
-    } else {
-      this.router.navigate(['/home-user-commom']);
-    }
-    console.log('perfil de acesso: ' + perfilAcesso);
+    const idUsuario: number =
+      this.authorizationService.getIdUsuarioAutenticado();
+
+    this.usuarioService.consultarPorId(idUsuario).subscribe((usuario: Usuario) => {
+        this.usuario = usuario;
+        console.log('usuarioAutenticado conferir: ', this.usuario);
+
+        if (this.usuario.perfilAcesso == 'ADMIN') {
+          console.log('usuarioAutenticado admin: ', this.usuario);
+          this.router.navigate(['/home-user-admin']);
+        } else {
+          console.log('usuarioAutenticado comum: ', this.usuario);
+          this.router.navigate(['/home-user-commom']);
+        }
+        console.log('usuarioAutenticado: ', this.usuario);
+        console.log('perfil de acesso: ',  this.usuario.perfilAcesso);
+      });
   }
 }

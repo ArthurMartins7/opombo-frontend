@@ -7,12 +7,12 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthorizationService {
   constructor() {}
 
-  public getPerfilAcessoDoUsuarioAutenticado(): any {
+  public getIdUsuarioAutenticado(): any {
     const token = localStorage.getItem('tokenUsuarioAutenticado');
 
     if (token) {
       const tokenDecodificado: any = jwtDecode(token);
-      return tokenDecodificado.roles;
+      return tokenDecodificado.idUsuario;
     }
     return null;
   }
