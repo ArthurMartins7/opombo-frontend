@@ -4,7 +4,7 @@
       <img src="https://images.sftcdn.net/images/t_app-icon-m/p/6621d159-46ab-4a88-a14c-0cb108267e21/2957382984/pegue-o-pombo-logo" class="h-8" alt="OPombo Logo" />
       <span class="self-center text-lg lg:text-2xl font-semibold whitespace-nowrap dark:text-white">OPombo</span>
     </a>
-    <div class="flex md:order-2">
+    <div class="flex md:order-2 items-center space-x-2">
       <div class="relative group">
         <button class="relative w-9 h-9 lg:w-10 lg:h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none">
           <svg class="absolute w-11 h-11 lg:w-12 lg:h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -12,12 +12,12 @@
           </svg>
         </button>
         <div class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block">
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Logout</a>
+          <button (click)="redirectToProfileDetails()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil</button>
+          <button (click)="logOut()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Logout</button>
         </div>
       </div>
-      <div class>
-
+      <div class="flex flex-col items-start">
+        <p class="text-sm text-gray-700 dark:text-gray-200">{{usuario.nome}}</p>
       </div>
     </div>
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
