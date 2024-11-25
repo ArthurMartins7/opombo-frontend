@@ -7,11 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import { Denuncia } from '../../../shared/model/entity/Denuncia';
 import { DenunciaSeletor } from '../../../shared/model/seletor/denunciaSeletor';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MotivoDenuncia } from '../../../shared/model/enums/MotivoDenuncia';
+import { SituacaoDenuncia } from '../../../shared/model/enums/SituacaoDenuncia';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -20,6 +23,8 @@ export class HomeUserAdminComponent implements OnInit {
   public denuncia: Denuncia = new Denuncia();
   public denuncias: Denuncia[] = [];
   public idDenuncia: number;
+  public motivoDenunciaEnum = Object.keys(MotivoDenuncia);
+  public situacaoDenunciaEnum = Object.keys(SituacaoDenuncia);
 
   public seletor: DenunciaSeletor = new DenunciaSeletor();
 
@@ -38,15 +43,19 @@ export class HomeUserAdminComponent implements OnInit {
 
   private usuario = new Usuario();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.consultarTodasDenuncias();
+  }
 
-  public consultarTodosCorredores() {
+  public consultarTodasDenuncias() {
     this.denunciaService.buscarTodas().subscribe(
       (resultado) => {
+        console.log("result: " ,resultado);
         this.denuncias = resultado;
+        console.log("result this.denuncia: " ,this.denuncia);
       },
       (erro) => {
-        console.error('Erro ao consultar todas as denuncias', erro.error.mensagem);
+        console.error('Erro ao consultar todas as denuncias', erro);
       }
     );
   }
@@ -64,4 +73,9 @@ export class HomeUserAdminComponent implements OnInit {
   //   this.contarPaginas()
   // }
 
+  public limpar() {
+    this.seletor = new DenunciaSeletor();
+    this.seletor.limite = this.TAMANHO_PAGINA;
+    this.seletor.pagina = 1;
+  }
 }

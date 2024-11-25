@@ -45,104 +45,101 @@
     </div>
   </nav>
 
-  <!-- Conteúdo Principal -->
-  <div class="container mx-auto p-6">
-    <h2 class="text-2xl font-semibold mb-4">Listagem de Mensagens Denunciadas</h2>
-
-    <!-- Filtros de Consulta -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <div class="flex flex-col">
-        <label for="filter1" class="text-gray-700">Filtro 1</label>
-        <input type="text" id="filter1" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Filtrar por ...">
-      </div>
-
-      <div class="flex flex-col">
-        <label for="filter2" class="text-gray-700">Filtro 2</label>
-        <select id="filter2" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="">Escolha uma opção</option>
-          <option value="option1">Opção 1</option>
-          <option value="option2">Opção 2</option>
-        </select>
-      </div>
-
-      <div class="flex flex-col">
-        <label for="filter3" class="text-gray-700">Filtro 3</label>
-        <input type="date" id="filter3" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-
-      <div class="flex flex-col">
-        <label for="filter4" class="text-gray-700">Filtro 4</label>
-        <input type="text" id="filter4" class="mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Filtrar por ...">
-      </div>
+  <div class="card w-full max-w-3xl mx-auto shadow-lg rounded-lg">
+    <div class="card-header bg-info text-black text-left">
+      <h5 class="text-2xl font-bold text-gray-900 dark:text-white mb-7">Filtros</h5>
     </div>
 
+    <div class="card-body p-4">
+      <form class="space-y-4 md:space-y-6" action="#">
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Filtro por Motivo -->
+          <div>
+            <label for="motivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Motivo:</label>
+            <select [(ngModel)]="seletor.motivo" name="motivo" id="motivo"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let motivo of motivoDenunciaEnum" [value]="motivo">
+                {{ motivo }}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label for="situacao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Situação:</label>
+            <select [(ngModel)]="seletor.situacao" name="situacao" id="motivo"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let situacao of situacaoDenunciaEnum" [value]="situacao">
+                {{ situacao }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Filtro por Data Inicial de Criação -->
+          <div>
+            <label for="dataInicialCriacao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data Inicial de Criação:</label>
+            <input [(ngModel)]="seletor.dataInicialCriacao" type="date" name="dataInicialCriacao" id="dataInicialCriacao"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          </div>
+
+          <!-- Filtro por Data Final de Criação -->
+          <div>
+            <label for="dataFinalCriacao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data Final de Criação:</label>
+            <input [(ngModel)]="seletor.dataFinalCriacao" type="date" name="dataFinalCriacao" id="dataFinalCriacao"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex justify-center space-x-4">
+          <div class="w-40">
+            <button (click)="limpar()" type="button"
+                    class="w-full text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <i class="bi bi-trash"></i> Limpar
+            </button>
+          </div>
+          <!-- <div class="w-40">
+            <button (click)="pesquisar()" type="button" class="w-full text-white bg-smartverde hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800">
+              <i class="bi bi-search"></i> Pesquisar
+            </button>
+          </div> -->
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+
+  <div class="w-full mt-8">
     <!-- Tabela de Mensagens Denunciadas -->
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+    <table class="w-full bg-white border border-gray-300 rounded-lg shadow-lg">
       <thead>
         <tr>
           <th class="p-4 text-left">
             <input type="checkbox" class="form-checkbox">
           </th>
+          <th class="p-4 text-left">Denunciante</th>
           <th class="p-4 text-left">Mensagem</th>
           <th class="p-4 text-left">Motivo</th>
+          <th class="p-4 text-left">Situação</th>
           <th class="p-4 text-left">Data da Denúncia</th>
           <th class="p-4 text-left">Ações</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Exemplo de Mensagens Denunciadas -->
-        <tr>
+        <!-- Iteração sobre as mensagens denunciadas -->
+        <tr *ngFor="let denuncia of denuncias" class="border-t border-gray-200">
           <td class="p-4">
             <input type="checkbox" class="form-checkbox">
           </td>
-          <td class="p-4">Mensagem 1</td>
-          <td class="p-4">Ofensa</td>
-          <td class="p-4">01/01/2024</td>
+          <td class="p-4">{{ denuncia.denunciante.nome }}</td>
+          <td class="p-4">{{ denuncia.mensagem.texto }}</td>
+          <td class="p-4">{{ denuncia.motivo }}</td>
+          <td class="p-4">{{ denuncia.situacao }}</td>
+          <td class="p-4">{{ denuncia.dataHoraCriacao }}</td>
           <td class="p-4 flex space-x-4">
-            <button class="bg-green-500 text-white p-2 rounded-lg">Analisar</button>
-            <button class="bg-red-500 text-white p-2 rounded-lg">Bloquear</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="p-4">
-            <input type="checkbox" class="form-checkbox">
-          </td>
-          <td class="p-4">Mensagem 2</td>
-          <td class="p-4">Discurso de Ódio</td>
-          <td class="p-4">02/01/2024</td>
-          <td class="p-4 flex space-x-4">
-            <button class="bg-green-500 text-white p-2 rounded-lg">Analisar</button>
-            <button class="bg-red-500 text-white p-2 rounded-lg">Bloquear</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="w-full max-w-3xl mx-auto mt-8">
-    <table class="table-auto w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="px-4 py-2 text-center text-gray-900">Denunciante</th>
-          <th class="px-4 py-2 text-center text-gray-900">Mensagem</th>
-          <th class="px-4 py-2 text-center text-gray-900">Motivo</th>
-          <th class="px-4 py-2 text-center text-gray-900">Situacao</th>
-          <th class="px-4 py-2 text-center text-gray-900">Data e hora</th>
-          <th class="px-4 py-2 text-center text-gray-900"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-t border-gray-200" *ngFor="let denuncia of denuncias">
-          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.denunciante }}</td>
-          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.mensagem }}</td>
-          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.motivo }}</td>
-          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.situacao }}</td>
-          <td class="px-4 py-2 text-center text-gray-900">{{ denuncia.dataHoraCriacao }}</td>
-          <td class="px-4 py-2 text-center">
-            <div class="flex justify-end space-x-2">
-              <!-- <button (click)="analisar(corredor.idCorredor)" type="button" class="w-24 text-white bg-smartamarelo hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800" >Editar</button>
-              <button (click)="excluir(corredor)" type="button" class="w-24 text-white bg-smartvermelho hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-smartverde dark:hover:bg-smartverde-hover dark:focus:ring-green-800" >Excluir</button> -->
-            </div>
+            <!-- <button (click)="analisar(denuncia)" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Analisar</button>
+            <button (click)="bloquear(denuncia)" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Bloquear</button> -->
           </td>
         </tr>
       </tbody>

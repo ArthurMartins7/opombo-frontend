@@ -7,6 +7,10 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'cadastro', component: CadastroComponent },
-  { path: 'home-user-admin', component: HomeUserAdminComponent },
+  { path: 'home-user-admin',
+    loadComponent: () =>
+      import('./components/usuario-admin/home/home.component').then(
+        (m) => m.HomeUserAdminComponent
+      ), },
   { path: 'home-user-commom', component: HomeUserCommomComponent },
 ];
