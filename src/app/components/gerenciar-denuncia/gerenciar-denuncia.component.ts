@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { AuthorizationService } from '../../../shared/service/authorization/authorization.service';
-import { UsuarioService } from '../../../shared/service/usuario/usuario.service';
+import { AuthorizationService } from '../../shared/service/authorization/authorization.service';
+import { UsuarioService } from '../../shared/service/usuario/usuario.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../../shared/model/entity/Usuario';
+import { Usuario } from '../../shared/model/entity/Usuario';
 
 @Component({
   selector: 'app-gerenciar-denuncia',
