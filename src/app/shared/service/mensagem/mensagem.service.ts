@@ -36,6 +36,10 @@ export class MensagemService {
     return this.httpCliente.put<any>(this.API + "/alterar", mensagem);
   }
 
+  public consultarPorId(id: string): Observable <Mensagem> {
+    return this.httpCliente.get<Mensagem>(this.API + '/id' + id);
+  }
+
   public excluirMensagemPorId(idMensagem: string):
   Observable<any>{
     return this.httpCliente.put<any>(this.API + "/id/", idMensagem);

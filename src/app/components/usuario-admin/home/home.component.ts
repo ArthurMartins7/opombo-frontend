@@ -85,7 +85,7 @@ export class HomeUserAdminComponent implements OnInit {
 
   // arrumar dps
   public analisar(): void{
-    this.router.navigate(['/gerenciar-denuncia']);
+    this.router.navigate(['/gerenciar-denuncia/:id']);
   }
 
   contarRegistros(){

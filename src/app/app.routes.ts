@@ -17,5 +17,5 @@ export const routes: Routes = [
       ), },
   { path: 'home-user-commom', component: HomeUserCommomComponent },
   { path: 'usuario-detalhe', component: UsuarioDetalheComponent},
-  { path: 'gerenciar-denuncia', component: GerenciarDenunciaComponent}
+  { path: 'gerenciar-denuncia/:id', component: GerenciarDenunciaComponent}
 ];
