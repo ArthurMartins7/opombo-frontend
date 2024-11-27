@@ -136,7 +136,7 @@
           <td class="p-4">{{ denuncia.mensagem.texto }}</td>
           <td class="p-4">{{ denuncia.motivo }}</td>
           <td class="p-4">{{ denuncia.situacao }}</td>
-          <td class="p-4">{{ denuncia.dataHoraCriacao }}</td>
+          <td class="p-4">{{ denuncia.dataHoraCriacao | date: 'dd/MM/yyyy HH:mm'}}</td>
           <td class="p-4 flex space-x-4">
             <button (click)="analisar()" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Analisar</button>
           </td>

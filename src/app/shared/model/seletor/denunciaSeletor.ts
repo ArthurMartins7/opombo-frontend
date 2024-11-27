@@ -6,6 +6,6 @@ export class DenunciaSeletor extends BaseSeletor{
 
   motivo: MotivoDenuncia;
   situacao: SituacaoDenuncia;
-  dataInicialCriacao: Date;
-  dataFinalCriacao: Date;
+  dataInicialCriacao: string;
+  dataFinalCriacao: string;
 }
