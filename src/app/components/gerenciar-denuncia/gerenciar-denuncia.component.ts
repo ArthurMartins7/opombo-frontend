@@ -34,16 +34,28 @@ export class GerenciarDenunciaComponent {
 
     this.route.params.subscribe(params => {
       console.log('Parâmetros da rota:', params);
-      this.denuncia.id = params['id'];
+      this.denuncia.id = params['idDenuncia'];
       if (this.denuncia.id) {
         this.buscarDenuncia();
       } else {
         console.error('ID da denúncia não encontrado na URL');
       }
     });
+  }
 
+  public rejeitarDenuncia(): void {
+    this.denunciaService.analisar(this.denuncia).subscribe((denuncia: Denuncia) => {
+      this.denuncia = denuncia;
+    },
+    (erro) => {
+      console.error('Erro ao analisar denuncia:', erro);
+    });
+  }
+
+  public bloquearMensagem() {
 
   }
+
 
   public getUsuario(): void {
     const idUsuario: number = this.authorizationService.getIdUsuarioAutenticado();

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MotivoDenuncia } from '../../../shared/model/enums/MotivoDenuncia';
 import { SituacaoDenuncia } from '../../../shared/model/enums/SituacaoDenuncia';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +49,7 @@ export class HomeUserAdminComponent implements OnInit {
     this.seletor.limite = this.TAMANHO_PAGINA;
     this.seletor.pagina = 1;
     this.pesquisar();
-    this.contarPaginas();
+    //this.contarPaginas();
   }
 
 
@@ -69,10 +70,21 @@ export class HomeUserAdminComponent implements OnInit {
     this.denunciaService.consultarComSeletor(this.seletor).subscribe(
       (resultado) => {
         this.denuncias = resultado;
-        this.contarRegistros();
+        //this.contarRegistros();
       },
       (erro) => {
         console.error('Erro ao buscar denuncias', erro.error?.mensagem || erro);
+      }
+    );
+  }
+
+  buscarPorId(): void {
+    this.denunciaService.consultarPorId(this.idDenuncia).subscribe(
+      (denuncia) => {
+        this.denuncia = denuncia;
+      },
+      (erro) => {
+        Swal.fire('Erro ao buscar a carta!', erro.mensagem, 'error');
       }
     );
   }
@@ -84,20 +96,20 @@ export class HomeUserAdminComponent implements OnInit {
   }
 
   // arrumar dps
-  public analisar(): void{
-    this.router.navigate(['/gerenciar-denuncia/:id']);
+  public analisar(idDenuncia: number): void{
+    this.router.navigate(['/gerenciar-denuncia/', idDenuncia]);
   }
 
-  contarRegistros(){
-    this.denunciaService.contarRegistros(this.seletor).subscribe(
-      (count: number) => {
-        this.totalRegistros = count
-      },
-      erro => {
-        console.log('Erro ao contar registros de denuncia', erro.error.mensagem)
-      }
-    )
-  }
+  // contarRegistros(){
+  //   this.denunciaService.contarRegistros(this.seletor).subscribe(
+  //     (count: number) => {
+  //       this.totalRegistros = count
+  //     },
+  //     erro => {
+  //       console.log('Erro ao contar registros de enuncia', erro.error.mensagem)
+  //     }
+  //   )
+  // }
 
   atualizarPaginacao() {
     this.contarPaginas();

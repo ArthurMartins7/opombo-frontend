@@ -1,6 +1,6 @@
 import { MotivoDenuncia } from '../enums/MotivoDenuncia';
 import { SituacaoDenuncia } from '../enums/SituacaoDenuncia';
-import { BaseSeletor } from './baseSeletor';
+import { BaseSeletor } from '../enums/baseSeletor';
 
 export class DenunciaSeletor extends BaseSeletor{
 

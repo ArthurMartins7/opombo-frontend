@@ -1,4 +1,4 @@
-import { BaseSeletor } from "./baseSeletor";
+import { BaseSeletor } from "../enums/baseSeletor";
 
 export class MensagemSeletor extends BaseSeletor{
 

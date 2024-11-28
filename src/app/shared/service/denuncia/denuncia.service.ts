@@ -18,7 +18,7 @@ export class DenunciaService {
   }
 
   public consultarPorId(id: number): Observable<Denuncia> {
-    return this.httpCliente.get<Denuncia>(`${this.API}/${id}`);
+    return this.httpCliente.get<Denuncia>(this.API + '/' + id);
   }
 
 
@@ -26,9 +26,13 @@ export class DenunciaService {
     return this.httpCliente.post<Array<Denuncia>>(this.API + '/filtro', seletor);
   }
 
-  contarRegistros(seletor: DenunciaSeletor): Observable<number>{
-    return this.httpCliente.post<number>(this.API + '/contar', seletor)
+  public analisar(denuncia: Denuncia): Observable<Denuncia> {
+    return this.httpCliente.post<Denuncia>(this.API, denuncia);
   }
+
+  // contarRegistros(seletor: DenunciaSeletor): Observable<number>{
+  //   return this.httpCliente.post<number>(this.API + '/contar', seletor)
+  // }
 
   contarPaginas(seletor: DenunciaSeletor): Observable<number>{
     return this.httpCliente.post<number>(this.API + '/total-paginas', seletor)
