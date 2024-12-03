@@ -30,6 +30,18 @@ export class DenunciaService {
     return this.httpCliente.post<Denuncia>(this.API, denuncia);
   }
 
+  public bloquearMensagem(idMensagem: string): Observable <string> {
+    return this.httpCliente.get<string>(this.API + '/bloquear/' + idMensagem);
+  }
+
+  public aceitarDenuncia(idDenuncia: number): Observable<boolean> {
+    return this.httpCliente.post<boolean>(this.API + '/aceitarDenuncia/' + idDenuncia, {});
+  }
+
+  public rejeitarDenuncia(idDenuncia: number): Observable<boolean> {
+    return this.httpCliente.post<boolean>(this.API + '/rejeitarDenuncia/' + idDenuncia, {});
+  }
+
   // contarRegistros(seletor: DenunciaSeletor): Observable<number>{
   //   return this.httpCliente.post<number>(this.API + '/contar', seletor)
   // }

@@ -45,16 +45,33 @@ export class GerenciarDenunciaComponent {
     });
   }
 
+  public voltar(){
+    this.router.navigate(['/home-user-admin']);
+  }
+
   public rejeitarDenuncia(): void {
-    this.denunciaService.analisar(this.denuncia).subscribe(
-      (denuncia: Denuncia) => {
-        this.denuncia = denuncia;
-      },
+    this.denunciaService.rejeitarDenuncia(this.denuncia.id).subscribe(
+      () => Swal.fire('Sucesso', 'Denúncia rejeitada!', 'success'),
       (erro) => {
-        console.error('Erro ao analisar denuncia:', erro);
+         // Verifica o tipo do erro retornado pela API:
+        // - Se for uma string, usa a mensagem retornada pela API.
+        // - Se não for (exemplo: um objeto ou erro genérico), usa uma mensagem padrão.
+        const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao rejeitar denúncia';
+        Swal.fire('Erro', mensagemErro, 'error');
       }
     );
   }
+
+  public aceitarDenuncia(): void {
+    this.denunciaService.aceitarDenuncia(this.denuncia.id).subscribe(
+      () => Swal.fire('Sucesso', 'Denúncia aceita!', 'success'),
+      (erro) => {
+        const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao aceitar denúncia';
+        Swal.fire('Erro', mensagemErro, 'error');
+      }
+    );
+  }
+
 
   public bloquearMensagem(): void {
     this.mensagemService.bloquearMensagem(this.denuncia.mensagem.id).subscribe(

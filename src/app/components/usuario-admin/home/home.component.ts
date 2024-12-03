@@ -48,7 +48,7 @@ export class HomeUserAdminComponent implements OnInit {
     this.consultarTodasDenuncias();
     this.seletor.limite = this.TAMANHO_PAGINA;
     this.seletor.pagina = 1;
-    //TODO criar no backend
+    this.pesquisar();
     //this.contarPaginas();
   }
 
@@ -95,7 +95,7 @@ export class HomeUserAdminComponent implements OnInit {
     this.seletor.pagina = 1;
   }
 
-  // arrumar dps
+
   public analisar(idDenuncia: number): void{
     this.router.navigate(['/gerenciar-denuncia/', idDenuncia]);
   }
