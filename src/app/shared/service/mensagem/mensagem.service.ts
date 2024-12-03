@@ -33,7 +33,7 @@ export class MensagemService {
 
   public alterarMensagem(mensagem: Mensagem):
   Observable<any>{
-    return this.httpCliente.put<any>(this.API + "/alterar", mensagem);
+    return this.httpCliente.put<any>(this.API + '/alterar', mensagem);
   }
 
   public consultarPorId(id: string): Observable <Mensagem> {
@@ -42,11 +42,10 @@ export class MensagemService {
 
   public excluirMensagemPorId(idMensagem: string):
   Observable<any>{
-    return this.httpCliente.put<any>(this.API + "/id/", idMensagem);
+    return this.httpCliente.put<any>(this.API + '/id/', idMensagem);
   }
 
-  public bloquearMensagem(idMensagem: string):
-  Observable<any>{
-    return this.httpCliente.put<any>(this.API + "/idMensagem/", idMensagem);
+  public bloquearMensagem(idMensagem: string): Observable <string> {
+    return this.httpCliente.get<string>(this.API + '/bloquear/' + idMensagem);
   }
 }

@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gerenciar-denuncia.component.html',
-  styleUrls: ['./gerenciar-denuncia.component.scss']
+  styleUrls: ['./gerenciar-denuncia.component.scss'],
 })
 export class GerenciarDenunciaComponent {
   private authorizationService = inject(AuthorizationService);
@@ -27,12 +27,14 @@ export class GerenciarDenunciaComponent {
   public mensagemDenunciada: Mensagem;
   private denunciaService = inject(DenunciaService);
   private mensagemService = inject(MensagemService);
-  private route: ActivatedRoute = inject(ActivatedRoute);  // Injeção corrigida
+  private route: ActivatedRoute = inject(ActivatedRoute); // Injeção corrigida
+
+  public mensagem = new Mensagem();
 
   ngOnInit(): void {
     this.getUsuario();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       console.log('Parâmetros da rota:', params);
       this.denuncia.id = params['idDenuncia'];
       if (this.denuncia.id) {
@@ -44,24 +46,35 @@ export class GerenciarDenunciaComponent {
   }
 
   public rejeitarDenuncia(): void {
-    this.denunciaService.analisar(this.denuncia).subscribe((denuncia: Denuncia) => {
-      this.denuncia = denuncia;
-    },
-    (erro) => {
-      console.error('Erro ao analisar denuncia:', erro);
-    });
+    this.denunciaService.analisar(this.denuncia).subscribe(
+      (denuncia: Denuncia) => {
+        this.denuncia = denuncia;
+      },
+      (erro) => {
+        console.error('Erro ao analisar denuncia:', erro);
+      }
+    );
   }
 
-  public bloquearMensagem() {
-
+  public bloquearMensagem(): void {
+    this.mensagemService.bloquearMensagem(this.denuncia.mensagem.id).subscribe(
+      (result: string) => {
+        Swal.fire('Sucesso', "Mensagem bloqueada!", 'success');
+      },
+      (erro) => {
+        Swal.fire('Erro', erro, 'error');
+      }
+    );
   }
-
 
   public getUsuario(): void {
-    const idUsuario: number = this.authorizationService.getIdUsuarioAutenticado();
-    this.usuarioService.consultarPorId(idUsuario).subscribe((usuario: Usuario) => {
-      this.usuario = usuario;
-    });
+    const idUsuario: number =
+      this.authorizationService.getIdUsuarioAutenticado();
+    this.usuarioService
+      .consultarPorId(idUsuario)
+      .subscribe((usuario: Usuario) => {
+        this.usuario = usuario;
+      });
   }
 
   public redirectToProfileDetails(): void {
@@ -98,9 +111,6 @@ export class GerenciarDenunciaComponent {
           Swal.fire('Erro ao buscar a denúncia!', erro, 'error');
         }
       );
-
     }
   }
-
-
 }

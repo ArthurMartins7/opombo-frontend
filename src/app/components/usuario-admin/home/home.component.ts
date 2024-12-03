@@ -48,7 +48,7 @@ export class HomeUserAdminComponent implements OnInit {
     this.consultarTodasDenuncias();
     this.seletor.limite = this.TAMANHO_PAGINA;
     this.seletor.pagina = 1;
-    this.pesquisar();
+    //TODO criar no backend
     //this.contarPaginas();
   }
 
