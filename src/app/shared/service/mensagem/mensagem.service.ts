@@ -13,6 +13,10 @@ export class MensagemService {
 
   constructor(private httpCliente: HttpClient) { }
 
+  uploadImagem(idMensagem: string, formData: FormData): Observable<any> {
+    return this.httpCliente.post(`${this.API}/${idMensagem}/upload`, formData);
+  }
+
   public buscarTodos(): Observable<Array<Mensagem>>{
     return this.httpCliente.get<Array<Mensagem>>(this.API);
   }
@@ -26,8 +30,7 @@ export class MensagemService {
     return this.httpCliente.post<number>(this.API + '/total-paginas', seletor);
   }
 
-  public publicarMensagem(mensagem: Mensagem):
-  Observable<any>{
+  public publicarMensagem(mensagem: Mensagem):Observable<any>{
     return this.httpCliente.post<any>(this.API, mensagem);
   }
 

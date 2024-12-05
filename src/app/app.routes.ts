@@ -5,6 +5,7 @@ import { HomeUserCommomComponent } from './components/usuario-comum/home/home.co
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioDetalheComponent } from './components/usuario-detalhe/usuario-detalhe.component';
 import { GerenciarDenunciaComponent } from './components/gerenciar-denuncia/gerenciar-denuncia.component';
+import { MensagemDetalheComponent } from './components/mensagem/mensagem-detalhe/mensagem-detalhe.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'home-user-admin', component: HomeUserAdminComponent},
   { path: 'home-user-commom', component: HomeUserCommomComponent },
   { path: 'usuario-detalhe', component: UsuarioDetalheComponent},
-  { path: 'gerenciar-denuncia/:idDenuncia', component: GerenciarDenunciaComponent}
+  { path: 'gerenciar-denuncia/:idDenuncia', component: GerenciarDenunciaComponent},
+  { path: 'mensagem-detalhe', component: MensagemDetalheComponent}
 ];

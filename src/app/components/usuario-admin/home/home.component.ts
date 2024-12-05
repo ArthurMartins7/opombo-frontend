@@ -21,6 +21,14 @@ import Swal from 'sweetalert2';
 })
 export class HomeUserAdminComponent implements OnInit {
 
+  private denunciaService = inject(DenunciaService);
+  private router = inject(Router);
+  private httpClient = inject(HttpClient);
+  private authorizationService = inject(AuthorizationService);
+
+
+  private usuario = new Usuario();
+
   public denuncia: Denuncia = new Denuncia();
   public denuncias: Denuncia[] = [];
   public idDenuncia: number;
@@ -34,22 +42,11 @@ export class HomeUserAdminComponent implements OnInit {
   public offset: number;
   public readonly TAMANHO_PAGINA: number = 3;
 
-  constructor(
-    private denunciaService: DenunciaService,
-    private router: Router,
-    private httpClient: HttpClient,
-  ){ }
-
-  private authorizationService = inject(AuthorizationService);
-
-  private usuario = new Usuario();
-
   ngOnInit(): void {
-    this.consultarTodasDenuncias();
-    this.seletor.limite = this.TAMANHO_PAGINA;
-    this.seletor.pagina = 1;
-    this.pesquisar();
-    //this.contarPaginas();
+    //this.consultarTodasDenuncias();
+    //this.seletor.limite = this.TAMANHO_PAGINA;
+    //this.seletor.pagina = 1;
+
   }
 
 
@@ -69,6 +66,7 @@ export class HomeUserAdminComponent implements OnInit {
   public pesquisar() {
     this.denunciaService.consultarComSeletor(this.seletor).subscribe(
       (resultado) => {
+        console.log('resultado', resultado)
         this.denuncias = resultado;
         //this.contarRegistros();
       },
@@ -99,17 +97,6 @@ export class HomeUserAdminComponent implements OnInit {
   public analisar(idDenuncia: number): void{
     this.router.navigate(['/gerenciar-denuncia/', idDenuncia]);
   }
-
-  // contarRegistros(){
-  //   this.denunciaService.contarRegistros(this.seletor).subscribe(
-  //     (count: number) => {
-  //       this.totalRegistros = count
-  //     },
-  //     erro => {
-  //       console.log('Erro ao contar registros de enuncia', erro.error.mensagem)
-  //     }
-  //   )
-  // }
 
   atualizarPaginacao() {
     this.contarPaginas();

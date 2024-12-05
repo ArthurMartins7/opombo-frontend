@@ -21,13 +21,15 @@ export class GerenciarDenunciaComponent {
   private authorizationService = inject(AuthorizationService);
   private usuarioService = inject(UsuarioService);
   private router = inject(Router);
+  private denunciaService = inject(DenunciaService);
+  private mensagemService = inject(MensagemService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
   public usuario = new Usuario();
   public denuncia = new Denuncia();
   public idDenuncia: string;
-  public mensagemDenunciada: Mensagem;
-  private denunciaService = inject(DenunciaService);
-  private mensagemService = inject(MensagemService);
-  private route: ActivatedRoute = inject(ActivatedRoute); // Injeção corrigida
+  public mensagemDenunciada = new Mensagem();
+
 
   public mensagem = new Mensagem();
 
