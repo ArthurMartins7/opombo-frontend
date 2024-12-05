@@ -53,11 +53,12 @@ export class GerenciarDenunciaComponent {
 
   public rejeitarDenuncia(): void {
     this.denunciaService.rejeitarDenuncia(this.denuncia.id).subscribe(
-      () => Swal.fire('Sucesso', 'Denúncia rejeitada!', 'success'),
+      () => {
+        Swal.fire('Sucesso', 'Denúncia rejeitada!', 'success').then(() => {
+          this.buscarDenuncia(); // Atualiza os dados na tela
+        });
+      },
       (erro) => {
-         // Verifica o tipo do erro retornado pela API:
-        // - Se for uma string, usa a mensagem retornada pela API.
-        // - Se não for (exemplo: um objeto ou erro genérico), usa uma mensagem padrão.
         const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao rejeitar denúncia';
         Swal.fire('Erro', mensagemErro, 'error');
       }
