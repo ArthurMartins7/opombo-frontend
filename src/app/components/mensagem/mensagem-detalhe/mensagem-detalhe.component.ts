@@ -65,7 +65,7 @@ export class MensagemDetalheComponent implements OnInit {
 
     console.log('id do usuário:', this.usuario.id);
     console.log('mensagem a ser enviada:', m);
-    
+
     this.mensagemService.publicarMensagem(m).subscribe(
       (resposta) => {
         console.log('resposta: ', resposta)
@@ -100,6 +100,7 @@ export class MensagemDetalheComponent implements OnInit {
   }
 
   public voltar(): void {
+    this.router.navigate(['/home-user-admin'])
 
   }
 

@@ -92,21 +92,30 @@
   </button>
 
   @for (m of mensagens; track m.id) {
-  <div class="card bg-white shadow-md rounded-lg p-4 my-4">
-    <p class="text-lg font-semibold">{{ m.texto }}</p>
-    <p class="text-gray-500">Enviado por: {{ m.usuario.nome }}</p>
-    @if (m.imagemEmBase64) {
-    <img
-    [src]="'data:image/jpeg;base64,' + m.imagemEmBase64"
-      alt="Imagem"
-      class="w-full h-96 mt-2 rounded"
-    />
-    }
-    <p type="date" class="text-sm text-gray-400">
-      Criado em: {{ m.dataHoraCriacao }}
-    </p>
-    <p class="text-sm text-gray-600">Curtidas: {{ m.quantidadeLikes }}</p>
+    <div class="card bg-white shadow-md rounded-lg p-4 my-4 mx-auto max-w-md">
+      <!-- Cabeçalho: Nome do usuário -->
+      <div class="flex items-center justify-center mb-2">
+        <p class="text-xl font-bold text-gray-800">{{ m.usuario.nome }}</p>
+      </div>
 
-  </div>
+      <!-- Imagem da mensagem (se houver) -->
+      @if (m.imagemEmBase64) {
+        <img
+          [src]="'data:image/jpeg;base64,' + m.imagemEmBase64"
+          alt="Imagem da mensagem"
+          class="h-60 mt-2 rounded-lg object-cover mx-auto"
+        />
+      }
+
+      <!-- Texto da mensagem -->
+      <p class="text-lg text-gray-700 mt-2 text-center">{{ m.texto }}</p>
+
+      <!-- Informações adicionais: Data e curtidas -->
+      <div class="mt-4 text-sm text-gray-500 flex justify-between">
+        <p>Curtidas: {{ m.quantidadeLikes }}</p>
+        <p>Criado em: {{ m.dataHoraCriacao }}</p>
+      </div>
+    </div>
   }
+
 </div>
