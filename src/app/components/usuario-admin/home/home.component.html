@@ -71,12 +71,13 @@
   </div>
 </nav>
 
-<div class="card w-full max-w-3xl mx-auto shadow-lg rounded-lg">
-  <div class="card-header bg-info text-black text-left">
+<div class="card w-full mx-auto shadow-lg rounded-lg">
+  <div class="card-header bg-info text-black flex justify-center items-center"> <!-- Centraliza o conteúdo -->
     <h5 class="text-2xl font-bold text-gray-900 dark:text-white mb-7">
-      Filtros
+      Listagem de denúncias
     </h5>
   </div>
+
 
   <div class="card-body p-4">
     <form class="space-y-4 md:space-y-6" action="#">
@@ -184,9 +185,6 @@
   <table class="w-full bg-white border border-gray-300 rounded-lg shadow-lg">
     <thead>
       <tr>
-        <th class="p-4 text-left">
-          <input type="checkbox" class="form-checkbox" />
-        </th>
         <th class="p-4 text-left">Denunciante</th>
         <th class="p-4 text-left">Mensagem</th>
         <th class="p-4 text-left">Motivo</th>
@@ -198,9 +196,6 @@
     <tbody>
       @for (denuncia of denuncias; track denuncia.id) {
       <tr class="border-t border-gray-200">
-        <td class="p-4">
-          <input type="checkbox" class="form-checkbox" />
-        </td>
         <td class="p-4">{{ denuncia.denunciante?.nome }}</td>
         <td class="p-4">{{ denuncia.mensagem.texto }}</td>
         <td class="p-4">{{ denuncia.motivo }}</td>
