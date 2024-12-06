@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { MensagemDTO } from '../../../shared/model/dto/MensagemDTO';
+import { Mensagem } from '../../../shared/model/entity/Mensagem';
 import { Usuario } from '../../../shared/model/entity/Usuario';
 import { AuthorizationService } from '../../../shared/service/authorization/authorization.service';
-import { UsuarioService } from '../../../shared/service/usuario/usuario.service';
-import { Router } from '@angular/router';
-import { Mensagem } from '../../../shared/model/entity/Mensagem';
 import { MensagemService } from '../../../shared/service/mensagem/mensagem.service';
-import { MensagemDTO } from '../../../shared/model/dto/MensagemDTO';
+import { UsuarioService } from '../../../shared/service/usuario/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -40,6 +41,16 @@ export class HomeUserCommomComponent implements OnInit{
     this.mensagemService.buscarTodos().subscribe((resultado) => {
       this.mensagens = resultado;
     });
+  }
+
+  public curtirMensagem(idMensagem: string): void {
+    this.mensagemService.curtirMensagem(idMensagem).subscribe((resultado) => {
+      this.buscarTodasMensagens();
+    },
+    (erro) => {
+      Swal.fire('Erro ao curtir mensagem: ' + erro.error, 'error');
+    }
+  );
   }
 
   public criarPruu(): void {

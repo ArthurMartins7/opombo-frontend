@@ -51,4 +51,8 @@ export class MensagemService {
   public bloquearMensagem(idMensagem: string): Observable <string> {
     return this.httpCliente.get<string>(this.API + '/bloquear/' + idMensagem);
   }
+
+  public curtirMensagem(idMensagem: string): Observable <string> {
+    return this.httpCliente.get<string>(this.API + '/curtir/' + idMensagem);
+  }
 }
