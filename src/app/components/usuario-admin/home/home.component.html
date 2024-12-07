@@ -1,5 +1,4 @@
-<!-- Navbar -->
-<nav class="w-full bg-white border-gray-200 dark:bg-gray-900">
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div
     class="max-w-full flex flex-wrap items-center justify-between mx-auto p-2 lg:p-4"
   >
@@ -17,7 +16,7 @@
         >OPombo</span
       >
     </a>
-    <div class="flex md:order-2">
+    <div class="flex md:order-2 items-center space-x-2">
       <div class="relative group">
         <button
           class="relative w-9 h-9 lg:w-10 lg:h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none"
@@ -38,17 +37,24 @@
         <div
           class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block"
         >
-          <a
-            href="#"
+          <button
+            (click)="redirectToProfileDetails()"
             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-            >Perfil</a
           >
-          <a
-            href="#"
+            Perfil
+          </button>
+          <button
+            (click)="logOut()"
             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-            >Logout</a
           >
+            Logout
+          </button>
         </div>
+      </div>
+      <div class="flex flex-col items-start">
+        <p class="text-sm text-gray-700 dark:text-gray-200">
+          {{ usuario.nome }}
+        </p>
       </div>
     </div>
     <div
@@ -61,16 +67,14 @@
         <li>
           <a
             href="#"
-            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-            aria-current="page"
-            >Home</a
+            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+            >Feed</a
           >
         </li>
       </ul>
     </div>
   </div>
 </nav>
-
 <div class="card w-full mx-auto shadow-lg rounded-lg">
   <div class="card-header bg-info text-black flex justify-center items-center"> <!-- Centraliza o conteúdo -->
     <h5 class="text-2xl font-bold text-gray-900 dark:text-white mb-7">

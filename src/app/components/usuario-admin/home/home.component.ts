@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MotivoDenuncia } from '../../../shared/model/enums/MotivoDenuncia';
 import { SituacaoDenuncia } from '../../../shared/model/enums/SituacaoDenuncia';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../shared/service/usuario/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -25,9 +26,10 @@ export class HomeUserAdminComponent implements OnInit {
   private router = inject(Router);
   private httpClient = inject(HttpClient);
   private authorizationService = inject(AuthorizationService);
+  private usuarioService = inject(UsuarioService);
 
 
-  private usuario = new Usuario();
+  public usuario = new Usuario();
 
   public denuncia: Denuncia = new Denuncia();
   public denuncias: Denuncia[] = [];
@@ -43,12 +45,29 @@ export class HomeUserAdminComponent implements OnInit {
   public readonly TAMANHO_PAGINA: number = 3;
 
   ngOnInit(): void {
+    this.getUsuario();
     //this.consultarTodasDenuncias();
     //this.seletor.limite = this.TAMANHO_PAGINA;
     //this.seletor.pagina = 1;
 
   }
 
+  public getUsuario(): void {
+    const idUsuario: number = this.authorizationService.getIdUsuarioAutenticado();
+    this.usuarioService.consultarPorId(idUsuario).subscribe((usuario: Usuario) => {
+        this.usuario = usuario;
+      });
+  }
+
+  public redirectToProfileDetails(): void {
+    this.router.navigate(['/usuario-detalhe']);
+  }
+
+  public logOut(): void {
+    alert('entrou no logout');
+    localStorage.removeItem('tokenUsuarioAutenticado');
+    this.router.navigate(['']);
+  }
 
   public consultarTodasDenuncias() {
     this.denunciaService.buscarTodas().subscribe(
