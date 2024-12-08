@@ -21,6 +21,10 @@ export class DenunciaService {
     return this.httpCliente.get<Denuncia>(this.API + '/' + id);
   }
 
+  public denunciar(denuncia: Denuncia): Observable<Denuncia> {
+    return this.httpCliente.post<Denuncia>(this.API, denuncia)
+  }
+
 
   public consultarComSeletor(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
     return this.httpCliente.post<Array<Denuncia>>(this.API + '/filtro', seletor);

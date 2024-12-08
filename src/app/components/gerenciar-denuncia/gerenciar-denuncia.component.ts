@@ -58,10 +58,10 @@ export class GerenciarDenunciaComponent {
         Swal.fire('Sucesso', 'Denúncia rejeitada!', 'success').then(() => {
           this.buscarDenuncia(); // Atualiza os dados na tela
         });
+        this.voltar();
       },
       (erro) => {
-        const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao rejeitar denúncia';
-        Swal.fire('Erro', mensagemErro, 'error');
+        Swal.fire('Erro ao rejeitar denúncia', erro.error, 'error');
       }
     );
   }
@@ -74,7 +74,7 @@ export class GerenciarDenunciaComponent {
         this.mensagemService.bloquearMensagem(this.denuncia.mensagem.id).subscribe(
           () => {
             // Atualiza a situação para BLOQUEADA após bloquear a mensagem
-            this.denuncia.situacao = SituacaoDenuncia.BLOQUEADA;
+            this.denuncia.situacao = SituacaoDenuncia.ACEITA;
 
             // Exibe uma mensagem de sucesso
             Swal.fire('Sucesso', 'Denúncia aceita e bloqueada!', 'success').then(() => {
@@ -83,14 +83,12 @@ export class GerenciarDenunciaComponent {
           },
           (erro) => {
             // Trata o erro e exibe uma mensagem apropriada
-            const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao bloquear a mensagem';
-            Swal.fire('Erro', mensagemErro, 'error');
+            Swal.fire('Erro ao bloquear a mensagem', erro.error, 'error');
           }
         );
       },
       (erro) => {
-        const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao aceitar denúncia';
-        Swal.fire('Erro', mensagemErro, 'error');
+        Swal.fire('Erro ao aceitarc denúncia', erro.error, 'error');
       }
     );
   }
@@ -101,15 +99,15 @@ export class GerenciarDenunciaComponent {
     this.mensagemService.bloquearMensagem(this.denuncia.mensagem.id).subscribe({
       next: () => {
         // Atualiza o status da denúncia para BLOQUEADA diretamente
-        this.denuncia.situacao = SituacaoDenuncia.BLOQUEADA;
+        this.denuncia.situacao = SituacaoDenuncia.ACEITA;
 
         // Exibe uma mensagem de sucesso e, se necessário, realiza ações subsequentes
         Swal.fire('Sucesso', 'Denúncia bloqueada!', 'success');
       },
       error: (erro) => {
         // Trata o erro e exibe uma mensagem apropriada
-        const mensagemErro = typeof erro.error === 'string' ? erro.error : 'Erro ao bloquear denúncia';
-        Swal.fire('Erro', mensagemErro, 'error');
+
+        Swal.fire('Erro ao bloquear a mensagem!', erro.error, 'error');
       }
     });
   }

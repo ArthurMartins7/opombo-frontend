@@ -100,7 +100,7 @@ export class MensagemDetalheComponent implements OnInit {
   }
 
   public voltar(): void {
-    this.router.navigate(['/home-user-admin'])
+    this.router.navigate(['/home-user-commom'])
 
   }
 

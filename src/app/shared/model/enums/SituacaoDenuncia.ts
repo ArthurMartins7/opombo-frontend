@@ -1,5 +1,5 @@
 export enum SituacaoDenuncia {
   PENDENTE = "PENDENTE",
-  BLOQUEADA = "BLOQUEADA",
+  ACEITA = "ACEITA",
   REJEITADA = "REJEITADA"
 }

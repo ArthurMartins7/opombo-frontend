@@ -17,6 +17,10 @@ export class MensagemService {
     return this.httpCliente.post(`${this.API}/${idMensagem}/upload`, formData);
   }
 
+  public consultarComSeletor(seletor: MensagemSeletor): Observable<Array<Mensagem>> {
+    return this.httpCliente.post<Array<Mensagem>>(this.API + '/filtro', seletor);
+  }
+
   public buscarTodos(): Observable<Array<Mensagem>>{
     return this.httpCliente.get<Array<Mensagem>>(this.API);
   }
@@ -40,7 +44,7 @@ export class MensagemService {
   }
 
   public consultarPorId(id: string): Observable <Mensagem> {
-    return this.httpCliente.get<Mensagem>(this.API + '/id' + id);
+    return this.httpCliente.get<Mensagem>(this.API + '/' + id);
   }
 
   public excluirMensagemPorId(idMensagem: string):
@@ -52,7 +56,7 @@ export class MensagemService {
     return this.httpCliente.get<string>(this.API + '/bloquear/' + idMensagem);
   }
 
-  public curtirMensagem(idMensagem: string): Observable <string> {
-    return this.httpCliente.get<string>(this.API + '/curtir/' + idMensagem);
+  public curtirMensagem(idMensagem: string): Observable <boolean> {
+    return this.httpCliente.get<boolean>(this.API + '/curtir/' + idMensagem);
   }
 }

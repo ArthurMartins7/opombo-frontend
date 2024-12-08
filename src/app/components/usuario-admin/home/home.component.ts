@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MotivoDenuncia } from '../../../shared/model/enums/MotivoDenuncia';
 import { SituacaoDenuncia } from '../../../shared/model/enums/SituacaoDenuncia';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../shared/service/usuario/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -25,9 +26,10 @@ export class HomeUserAdminComponent implements OnInit {
   private router = inject(Router);
   private httpClient = inject(HttpClient);
   private authorizationService = inject(AuthorizationService);
+  private usuarioService = inject(UsuarioService);
 
 
-  private usuario = new Usuario();
+  public usuario = new Usuario();
 
   public denuncia: Denuncia = new Denuncia();
   public denuncias: Denuncia[] = [];
@@ -43,10 +45,26 @@ export class HomeUserAdminComponent implements OnInit {
   public readonly TAMANHO_PAGINA: number = 3;
 
   ngOnInit(): void {
-    //this.consultarTodasDenuncias();
-    //this.seletor.limite = this.TAMANHO_PAGINA;
-    //this.seletor.pagina = 1;
+    this.seletor = new DenunciaSeletor();
+    this.seletor.limite = 3;
+    this.seletor.pagina = 1;
+    //this.buscarTodasDenuncias();
+    this.getUsuario();
+  }
 
+  public getUsuario(): void {
+    const idUsuario: number = this.authorizationService.getIdUsuarioAutenticado();
+    this.usuarioService.consultarPorId(idUsuario).subscribe((usuario: Usuario) => {
+        this.usuario = usuario;
+        console.log('Usuario carregado:', usuario);
+      });
+  }
+
+  public buscarTodasDenuncias(): void {
+    this.denunciaService.buscarTodas().subscribe((resultado) => {
+      console.log('resultado: ', resultado);
+      this.denuncias = resultado;
+    });
   }
 
 
@@ -64,11 +82,11 @@ export class HomeUserAdminComponent implements OnInit {
   }
 
   public pesquisar() {
+    console.log('Pesquisando com seletor:', this.seletor);
     this.denunciaService.consultarComSeletor(this.seletor).subscribe(
       (resultado) => {
-        console.log('resultado', resultado)
         this.denuncias = resultado;
-        //this.contarRegistros();
+        this.contarPaginas();
       },
       (erro) => {
         console.error('Erro ao buscar denuncias', erro.error?.mensagem || erro);
@@ -91,6 +109,7 @@ export class HomeUserAdminComponent implements OnInit {
     this.seletor = new DenunciaSeletor();
     this.seletor.limite = this.TAMANHO_PAGINA;
     this.seletor.pagina = 1;
+    this.pesquisar();
   }
 
 
@@ -98,40 +117,61 @@ export class HomeUserAdminComponent implements OnInit {
     this.router.navigate(['/gerenciar-denuncia/', idDenuncia]);
   }
 
-  atualizarPaginacao() {
-    this.contarPaginas();
+  public redirectToProfileDetails(): void {
+    this.router.navigate(['/usuario-detalhe']);
+  }
+
+  public logOut(): void {
+    alert('entrou no logout');
+    localStorage.removeItem('tokenUsuarioAutenticado');
+    this.router.navigate(['']);
+  }
+
+  public atualizarPaginacao() {
+    this.seletor.pagina = 1;
     this.pesquisar();
   }
 
-  proximaPg(){
-    this.seletor.pagina++;
-    this.pesquisar();
+  proximaPg() {
+    if (this.seletor.pagina < this.totalPaginas) {
+      this.seletor.pagina++;
+      this.pesquisar();
+    }
   }
 
-  voltarPg(){
-    this.seletor.pagina--;
-    this.pesquisar();
+  voltarPg() {
+    if (this.seletor.pagina > 1) {
+      this.seletor.pagina--;
+      this.pesquisar();
+    }
   }
 
   irParaPagina(indicePagina: number) {
-    this.seletor.pagina = indicePagina;
-    this.pesquisar();
+    if (indicePagina >= 1 && indicePagina <= this.totalPaginas) {
+      this.seletor.pagina = indicePagina;
+      this.pesquisar();
+    }
   }
 
-   // Método para criar um array de páginas para ser utilizado no ngFor do HTML
-   criarArrayPaginas(): any[] {
-    return Array(this.totalPaginas).fill(0).map((x, i) => i + 1);
+  criarArrayPaginas(): number[] {
+    return Array(this.totalPaginas).fill(0).map((_, i) => i + 1);
   }
 
+  contarPaginas() {
+    if (!this.seletor.limite) {
+      this.seletor.limite = 3;
+    }
 
-  contarPaginas(){
     this.denunciaService.contarPaginas(this.seletor).subscribe(
       (count: number) => {
-        this.totalPaginas = count
+        this.totalPaginas = count;
+        console.log('Total de páginas:', this.totalPaginas);
+        console.log('Limite atual:', this.seletor.limite);
       },
       erro => {
-        console.log('Erro ao contar paginas de denuncia', erro.error.mensagem)
+        console.error('Erro ao contar paginas de denuncia', erro.error?.mensagem || erro);
+        this.totalPaginas = 1;
       }
-    )
+    );
   }
 }

@@ -8,7 +8,7 @@
     >
       <img
         src="https://images.sftcdn.net/images/t_app-icon-m/p/6621d159-46ab-4a88-a14c-0cb108267e21/2957382984/pegue-o-pombo-logo"
-        class="h-8"
+        class="h-12 lg:h-14"
         alt="OPombo Logo"
       />
       <span
@@ -19,42 +19,47 @@
     <div class="flex md:order-2 items-center space-x-2">
       <div class="relative group">
         <button
-          class="relative w-9 h-9 lg:w-10 lg:h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none"
+          class="relative w-12 h-12 lg:w-14 lg:h-14 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none"
         >
-          <svg
-            class="absolute w-11 h-11 lg:w-12 lg:h-12 text-gray-400 -left-1"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
+          @if (usuario?.imagemEmBase64 ) {
+            <img
+              [src]="'data:image/jpeg;base64,' + usuario.imagemEmBase64"
+              alt="Imagem do usuario"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+          } @else {
+            <svg
+              class="absolute w-14 h-14 lg:w-16 lg:h-16 text-gray-400 -left-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          }
         </button>
         <div
-          class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block"
+          class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block z-50"
         >
           <button
             (click)="redirectToProfileDetails()"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 text-left"
           >
             Perfil
           </button>
           <button
             (click)="logOut()"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 text-left"
           >
             Logout
           </button>
         </div>
       </div>
       <div class="flex flex-col items-start">
-        <p class="text-sm text-gray-700 dark:text-gray-200">
-          {{ usuario.nome }}
-        </p>
+        <p class="text-lg font-bold text-gray-800">{{ usuario.nome }}</p>
       </div>
     </div>
     <div
@@ -76,79 +81,279 @@
   </div>
 </nav>
 
-<div class="container mx-auto p-4">
-  <button
-    (click)="buscarTodasMensagens()"
-    class="w-40 text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-  >
-    <i class="bi bi-search"></i> Buscar todas
-  </button>
-
-  <button
-    (click)="criarPruu()"
-    class="w-40 text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-  >
-    <i class="bi bi-search"></i>  + Criar Pruu
-  </button>
-
-  @for (m of mensagens; track m.id) {
-    <div class="card bg-white shadow-md rounded-lg p-4 my-4 mx-auto max-w-2xl">
-      <!-- Cabeçalho: Nome do usuário -->
-      <div class="flex items-center justify-start mb-2">
-        <p class="text-xl font-bold text-gray-800">{{ m.usuario.nome }}</p>
-      </div>
-
-       <!-- Texto da mensagem -->
-       <p class="text-lg text-gray-700 mt-2 text-left">
-        {{ m.texto }}
-      </p>
-
-      <!-- Imagem da mensagem (se houver) -->
-      @if (m.imagemEmBase64) {
-        <img
-          [src]="'data:image/jpeg;base64,' + m.imagemEmBase64"
-          alt="Imagem da mensagem"
-          class="h-60 mt-2 rounded-lg object-cover mx-auto"
-        />
-      }
-
-      <!-- Informações adicionais: Data e curtidas -->
-      <div class="mt-4 text-sm text-gray-500 flex justify-between">
-        <div class="flex items-center gap-1">
-          @if (m.curtidas.includes(usuario)) {
-            <svg
-              (click)="curtirMensagem(m.id)"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="red"
-              viewBox="0 0 24 24"
-              stroke="red"
-              stroke-width="1.5"
-              class="w-5 h-5 cursor-pointer hover:scale-110 transition-transform">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+<div class="bg-gray-50 min-h-screen">
+  <div class="card w-full mx-auto shadow-lg rounded-lg bg-white">
+    <div class="p-4">
+      <form class="space-y-4" action="#">
+        <!-- Search bar with filter icon -->
+        <div class="relative">
+          <input
+            [(ngModel)]="mensagemSeletor.texto"
+            type="text"
+            name="texto"
+            id="texto"
+            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Pesquisar Pruus..."
+          />
+          <button
+            type="button"
+            (click)="toggleFiltros()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
-          } @else {
-            <svg
-              (click)="curtirMensagem(m.id)"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="1.5"
-              class="w-5 h-5 cursor-pointer hover:scale-110 transition-transform">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          }
-          <p>Curtidas: {{ m.quantidadeLikes }}</p>
+          </button>
         </div>
-        <p>Criado em: {{ m.dataHoraCriacao }}</p>
-      </div>
-    </div>
-  }
 
+        <!-- Filtros adicionais (hidden by default) -->
+        @if (mostrarFiltros) {
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="col-span-2">
+              <label for="nomeUsuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Nome do usuário:
+              </label>
+              <input
+                [(ngModel)]="mensagemSeletor.nomeUsuario"
+                type="text"
+                name="nomeUsuario"
+                id="nomeUsuario"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Digite o nome do usuário..."
+              />
+            </div>
+
+            <div>
+              <label for="dataInicialCriacao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Data Inicial de Criação:
+              </label>
+              <input
+                [(ngModel)]="mensagemSeletor.dataInicialCriacao"
+                type="date"
+                name="dataInicialCriacao"
+                id="dataInicialCriacao"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+
+            <div>
+              <label for="dataFinalCriacao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Data Final de Criação:
+              </label>
+              <input
+                [(ngModel)]="mensagemSeletor.dataFinalCriacao"
+                type="date"
+                name="dataFinalCriacao"
+                id="dataFinalCriacao"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+          </div>
+        }
+
+        <!-- Botões -->
+        <div class="flex justify-end space-x-4">
+          <button
+            (click)="limpar()"
+            type="button"
+            class="text-white bg-gray-500 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+          >
+            <i class="bi bi-trash"></i> Limpar
+          </button>
+          <button
+            (click)="pesquisar()"
+            type="button"
+            class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <i class="bi bi-search"></i> Pesquisar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="container mx-auto p-4">
+    <!-- Container das mensagens com largura máxima -->
+    <div class="max-w-2xl mx-auto relative">
+      <!-- Floating Action Button (FAB) -->
+      <button
+        (click)="criarPruu()"
+        class="fixed bottom-20 right-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center gap-2 px-6 py-4 transition-transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        style="right: calc(50% - 28rem)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        <span class="text-sm font-medium">O que você está pensando?</span>
+      </button>
+
+        <!-- Lista de mensagens -->
+        @for (m of mensagens; track m.id) {
+          <div class="card bg-white shadow-md rounded-lg p-4 my-4">
+            <!-- Cabeçalho: Nome do usuário e menu -->
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 overflow-hidden rounded-full">
+                  @if (m.usuario?.imagemEmBase64 ) {
+                  <img
+                    [src]="'data:image/jpeg;base64,' + m.usuario.imagemEmBase64"
+                    alt="Imagem de perfil"
+                    class="w-full h-full object-cover"
+                  />
+                  } @else {
+                  <div
+                    class="w-full h-full bg-gray-100 flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-6 h-6 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  }
+                </div>
+                <p class="text-xl font-bold text-gray-800">{{ m.usuario.nome }}</p>
+              </div>
+
+            <!-- Menu de três pontos -->
+            <div class="relative">
+              <button
+                (click)="toggleMenu(m.id)"
+                class="p-1 hover:bg-gray-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5 text-gray-500"
+                     viewBox="0 0 20 20"
+                     fill="currentColor">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+              </button>
+
+              <!-- Menu popup -->
+              @if (menuAberto === m.id) {
+                <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
+                  @if (m.usuario.id !== usuario.id) {
+                    <button
+                      (click)="denunciarMensagem(m.id)"
+                      class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Denunciar
+                    </button>
+                  }
+                  @if (m.usuario.id === usuario.id) {
+                    <button
+                      (click)="excluirMensagem(m.id)"
+                      class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                      Excluir
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Texto da mensagem -->
+          <p class="text-lg text-gray-700 mt-2 text-left">
+            {{ m.texto }}
+          </p>
+
+          <!-- Imagem da mensagem (se houver) -->
+          @if (m.imagemEmBase64) {
+            <img
+              [src]="'data:image/jpeg;base64,' + m.imagemEmBase64"
+              alt="Imagem da mensagem"
+              class="h-60 mt-2 rounded-lg object-cover mx-auto"
+            />
+          }
+
+          <!-- Informações adicionais: Data e curtidas -->
+          <div class="mt-4 text-sm text-gray-500 flex justify-between">
+            <div class="flex items-center gap-1">
+              @if (usuarioCurtiuMensagem(m)) {
+                <svg
+                  (click)="curtirMensagem(m.id)"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#EF4444"
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 cursor-pointer hover:scale-110 transition-transform">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke="#EF4444"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+              } @else {
+                <svg
+                  (click)="curtirMensagem(m.id)"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  class="w-5 h-5 cursor-pointer hover:scale-110 transition-transform">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+              }
+              <p>{{ m.quantidadeLikes }}</p>
+            </div>
+            <p>Pruublicado em: {{ m.dataHoraCriacao | date: 'dd/MM/yyyy HH:mm'}}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Modal de Denúncia -->
+    @if (showDenunciaModal) {
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+          <!-- Cabeçalho do Modal -->
+          <div class="flex justify-between items-center p-4 border-b">
+            <h2 class="text-lg font-semibold">Denunciar</h2>
+            <button
+              (click)="fecharModalDenuncia()"
+              class="text-gray-500 hover:text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Corpo do Modal -->
+          <div class="p-4">
+            <p class="mb-4 text-gray-700">Por que você está denunciando essa publicação?</p>
+
+            <select
+              [(ngModel)]="motivoSelecionado"
+              class="w-full p-2 border rounded-lg mb-4 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+              <option [ngValue]="null">Selecione um motivo</option>
+              @for (motivo of motivoDenunciaEnum; track motivo) {
+                <option [value]="motivo">{{ motivo.replace('_', ' ') }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Rodapé do Modal -->
+          <div class="p-4 border-t flex justify-end gap-2">
+            <button
+              (click)="fecharModalDenuncia()"
+              class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+              Cancelar
+            </button>
+            <button
+              (click)="enviarDenuncia()"
+              [disabled]="!motivoSelecionado"
+              class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed">
+              Denunciar
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
 </div>

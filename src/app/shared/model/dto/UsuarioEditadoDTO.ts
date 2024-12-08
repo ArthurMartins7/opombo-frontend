@@ -7,5 +7,6 @@ export class UsuarioEditadoDTO {
   email: string;
   senha: string;
   cpf: string;
+  imagemEmBase64: string;
 
 }

@@ -1,9 +1,90 @@
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <div
+    class="max-w-full flex flex-wrap items-center justify-between mx-auto p-2 lg:p-4"
+  >
+    <a
+      href="#"
+      class="flex items-center space-x-2 lg:space-x-3 rtl:space-x-reverse"
+    >
+      <img
+        src="https://images.sftcdn.net/images/t_app-icon-m/p/6621d159-46ab-4a88-a14c-0cb108267e21/2957382984/pegue-o-pombo-logo"
+        class="h-12 lg:h-14"
+        alt="OPombo Logo"
+      />
+      <span
+        class="self-center text-lg lg:text-2xl font-semibold whitespace-nowrap dark:text-white"
+        >OPombo</span
+      >
+    </a>
+    <div class="flex md:order-2 items-center space-x-2">
+      <div class="relative group">
+        <button
+          class="relative w-12 h-12 lg:w-14 lg:h-14 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 focus:outline-none"
+        >
+          @if (usuario?.imagemEmBase64 ) {
+            <img
+              [src]="'data:image/jpeg;base64,' + usuario.imagemEmBase64"
+              alt="Imagem do usuario"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+          } @else {
+            <svg
+              class="absolute w-14 h-14 lg:w-16 lg:h-16 text-gray-400 -left-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          }
+        </button>
+        <div
+          class="hidden absolute right-0 mt-2 w-40 lg:w-48 bg-white rounded-lg shadow-lg dark:bg-gray-800 group-focus-within:block group-hover:block z-50"
+        >
+          <button
+            (click)="redirectToProfileDetails()"
+            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 text-left"
+          >
+            Perfil
+          </button>
+          <button
+            (click)="logOut()"
+            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 text-left"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-col items-start">
+        <p class="text-lg font-bold text-gray-800">{{ usuario.nome }}</p>
+      </div>
+    </div>
+    <div
+      class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+      id="navbar-search"
+    >
+      <ul
+        class="flex flex-col p-2 lg:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 lg:space-x-16 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+      >
+        <li>
+          <a
+            href="#"
+            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+            >Perfil</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
 <section class="bg-gray-50 dark:bg-gray-900">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-      <img class="w-8 h-8 mr-2" src="https://easyaccounting101.com/wp-content/uploads/2021/08/rectification-of-errors.png" alt="logo">
-      OPombo
-    </a>
+
     <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
@@ -12,27 +93,12 @@
         <form class="space-y-4 md:space-y-6" action="#">
           <div class="grid grid-cols-2 gap-4">
             <div class="col-span-2">
-              <label for="perfilAcesso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perfil de acesso</label>
-              <select class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="perfilAcesso" [(ngModel)]="usuarioEditadoDTO.perfilAcesso" required>
-                <option value="ADMIN">ADMIN</option>
-                <option value="GERAL">GERAL</option>
-              </select>
+              <label for="imagem" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecionar imagem de perfil</label>
+              <input type="file" name="imagem" id="imagem" accept="image/*" (change)="onFileSelected($event)"  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
-            <div>
-              <label for="cpf" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF</label>
-              <input [(ngModel)]="usuarioEditadoDTO.cpf" type="text" name="cpf" id="cpf" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="XXX.XXX.XXX-XX" required>
-            </div>
-            <div>
+            <div class="col-span-2">
               <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
               <input [(ngModel)]="usuarioEditadoDTO.nome" type="text" name="nome" id="nome" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Informe o seu nome..." required>
-            </div>
-            <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
-              <input [(ngModel)]="usuarioEditadoDTO.email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required>
-            </div>
-            <div>
-              <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha</label>
-              <input [(ngModel)]="usuarioEditadoDTO.senha" type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
           </div>
           <div class="flex justify-center space-x-4">

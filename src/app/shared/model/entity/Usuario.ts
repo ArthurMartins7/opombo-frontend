@@ -11,5 +11,5 @@ export class Usuario {
   criadoEm: string;
   dataUltimaModificacao: string;
   mensagens: Mensagem[];
-  imagePerfil: string;
+  imagemEmBase64: string;
 }

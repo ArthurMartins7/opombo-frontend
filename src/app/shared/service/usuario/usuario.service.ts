@@ -26,4 +26,8 @@ export class UsuarioService {
   public atualizar(id: number, usuarioEditadoDTO: UsuarioEditadoDTO): Observable<Usuario> {
     return this.httpClient.put<Usuario>(this.API + '/' + id, usuarioEditadoDTO);
   }
+
+  uploadImagem(idusuario: number, formData: FormData): Observable<any> {
+    return this.httpClient.post(`${this.API}/${idusuario}/upload`, formData);
+  }
 }
