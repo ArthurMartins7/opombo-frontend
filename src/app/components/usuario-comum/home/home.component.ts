@@ -21,8 +21,7 @@ import { MensagemSeletor } from '../../../shared/model/seletor/mensagemSeletor';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeUserCommomComponent implements OnInit{
-
+export class HomeUserCommomComponent implements OnInit {
   private authorizationService = inject(AuthorizationService);
   private usuarioService = inject(UsuarioService);
   private mensagemService = inject(MensagemService);
@@ -35,7 +34,6 @@ export class HomeUserCommomComponent implements OnInit{
   public MensagemDTO = new MensagemDTO();
   public mensagemSeletor: MensagemSeletor = new MensagemSeletor();
 
-
   menuAberto: string | null = null;
   motivoDenunciaEnum = Object.values(MotivoDenuncia);
   motivoSelecionado: MotivoDenuncia | null = null;
@@ -45,12 +43,16 @@ export class HomeUserCommomComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUsuario();
-    this.buscarTodasMensagens();
+    //this.buscarTodasMensagens();
+    this.buscarTodasMensagensAtivas();
   }
 
   public getUsuario(): void {
-    const idUsuario: number = this.authorizationService.getIdUsuarioAutenticado();
-    this.usuarioService.consultarPorId(idUsuario).subscribe((usuario: Usuario) => {
+    const idUsuario: number =
+      this.authorizationService.getIdUsuarioAutenticado();
+    this.usuarioService
+      .consultarPorId(idUsuario)
+      .subscribe((usuario: Usuario) => {
         this.usuario = usuario;
         console.log('Usuario carregado:', usuario);
       });
@@ -63,14 +65,22 @@ export class HomeUserCommomComponent implements OnInit{
     });
   }
 
+  public buscarTodasMensagensAtivas(): void {
+    this.mensagemService.buscarTodasMensagensAtivas().subscribe((resultado) => {
+      console.log('resultado: ', resultado);
+      this.mensagens = resultado;
+    });
+  }
+
   public curtirMensagem(idMensagem: string): void {
-    this.mensagemService.curtirMensagem(idMensagem).subscribe((resultado) => {
-      this.buscarTodasMensagens();
-    },
-    (erro) => {
-      Swal.fire('Erro ao curtir mensagem: ' + erro.error, 'error');
-    }
-  );
+    this.mensagemService.curtirMensagem(idMensagem).subscribe(
+      (resultado) => {
+        this.buscarTodasMensagens();
+      },
+      (erro) => {
+        Swal.fire('Erro ao curtir mensagem: ' + erro.error, 'error');
+      }
+    );
   }
 
   public criarPruu(): void {
@@ -89,7 +99,7 @@ export class HomeUserCommomComponent implements OnInit{
 
   public usuarioCurtiuMensagem(mensagem: Mensagem): boolean {
     if (!mensagem.curtidas || !this.usuario) return false;
-    return mensagem.curtidas.some(c => c.id === this.usuario.id);
+    return mensagem.curtidas.some((c) => c.id === this.usuario.id);
   }
 
   toggleMenu(mensagemId: string) {
@@ -122,26 +132,57 @@ export class HomeUserCommomComponent implements OnInit{
         this.fecharModalDenuncia();
       },
       error: (erro) => {
-        console.log(erro)
+        console.log(erro);
         Swal.fire('Erro', 'Erro ao enviar denúncia: ' + erro.error, 'error');
-      }
+      },
     });
   }
 
-  excluirMensagem(mensagemId: string) {
-    // Implementar lógica de exclusão
-    this.menuAberto = null; // Fecha o menu após a ação
+  excluirMensagem(idMensagem: string) {
+    // Exibe o Swal de confirmação primeiro
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter esta ação!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar Pruu!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.mensagemService.marcarMensagemComoExcluida(idMensagem).subscribe(
+          (res) => {
+            Swal.fire({
+              title: 'Deletado!',
+              text: 'Pruu deletado com sucesso.',
+              icon: 'success',
+            });
+            this.buscarTodasMensagensAtivas();
+          },
+          (erro) => {
+            Swal.fire('Erro ao excluir a mensagem!', erro.error, 'error');
+          }
+        );
+      }
+    });
+
+    // Fecha o menu após a ação, independentemente da resposta
+    this.menuAberto = null;
   }
 
   public pesquisar() {
     this.mensagemService.consultarComSeletor(this.mensagemSeletor).subscribe(
       (resultado) => {
-        console.log('resultado', resultado)
+        console.log('resultado', resultado);
         this.mensagens = resultado;
         //this.contarRegistros();
       },
       (erro) => {
-        console.error('Erro ao buscar mensagens com filtro', erro.error?.mensagem || erro);
+        console.error(
+          'Erro ao buscar mensagens com filtro',
+          erro.error?.mensagem || erro
+        );
       }
     );
   }
@@ -160,5 +201,4 @@ export class HomeUserCommomComponent implements OnInit{
       this.menuAberto = null;
     }
   }
-
 }

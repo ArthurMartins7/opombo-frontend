@@ -49,7 +49,15 @@ export class MensagemService {
 
   public excluirMensagemPorId(idMensagem: string):
   Observable<any>{
-    return this.httpCliente.put<any>(this.API + '/id/', idMensagem);
+    return this.httpCliente.delete<any>(this.API + '/' + idMensagem);
+  }
+
+  public marcarMensagemComoExcluida(idMensagem: string): Observable<any> {
+    return this.httpCliente.get<any>(this.API + '/desativar/' + idMensagem);
+  }
+
+  public buscarTodasMensagensAtivas(): Observable<Array<Mensagem>> {
+    return this.httpCliente.get<Array<Mensagem>>(this.API + '/ativas');
   }
 
   public bloquearMensagem(idMensagem: string): Observable <string> {

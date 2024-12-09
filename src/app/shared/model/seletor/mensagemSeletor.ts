@@ -1,6 +1,6 @@
 import { BaseSeletor } from "../enums/baseSeletor";
 
-export class MensagemSeletor extends BaseSeletor{
+export class MensagemSeletor{
 
   dataInicialCriacao: Date;
   dataFinalCriacao: Date;
